@@ -17,7 +17,7 @@ CATALINA_OPTS="${CATALINA_OPTS} -DcatalinaConnectorSecure=${CATALINA_CONNECTOR_S
 
 export CATALINA_OPTS
 
-# 
+# Server proxy
 if [ "$(stat -c "%Y" "${JIRA_INSTALL}/conf/server.xml")" -eq "0" ]; then
   if [ -n "${CATALINA_CONNECTOR_PROXYNAME}" ]; then
     xmlstarlet ed --inplace --pf --ps --insert '//Connector[@port="8080"]' --type "attr" --name "proxyName" --value "${CATALINA_CONNECTOR_PROXYNAME}" "${JIRA_INSTALL}/conf/server.xml"

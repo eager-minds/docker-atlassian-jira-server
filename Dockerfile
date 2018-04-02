@@ -1,12 +1,12 @@
 FROM openjdk:8-jdk-alpine
-MAINTAINER Eager Minds
+MAINTAINER Javier de Diego Navarro - Eager Minds [javier@eager-minds.com]
 
 # Environment vars
-ENV JIRA_HOME     /var/atlassian/jira
-ENV JIRA_INSTALL  /opt/atlassian/jira
-ENV JIRA_VERSION  7.8.1
-ENV MYSQL_VERSION 5.1.45
-ENV POSTGRES_VERSION 42.2.1
+ENV JIRA_HOME           /var/atlassian/jira
+ENV JIRA_INSTALL        /opt/atlassian/jira
+ENV JIRA_VERSION        7.8.1
+ENV MYSQL_VERSION       5.1.45
+ENV POSTGRES_VERSION    42.2.1
 
 ENV RUN_USER            root
 ENV RUN_GROUP           root
@@ -54,11 +54,6 @@ EXPOSE 8080
 VOLUME ["/var/atlassian/jira", "/opt/atlassian/jira/logs"]
 
 WORKDIR $JIRA_HOME
-
-#COPY "docker-entrypoint.sh" "/"
-
-#ENTRYPOINT ["/docker-entrypoint.sh"]
-#CMD ["/opt/atlassian/jira/bin/start-jira.sh", "-fg"]
 
 COPY "entrypoint.sh" "/"
 
