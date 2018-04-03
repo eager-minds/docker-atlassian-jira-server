@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine
+FROM frolvlad/alpine-oraclejdk8:cleaned
 MAINTAINER Javier de Diego Navarro - Eager Minds [javier@eager-minds.com]
 
 # Environment vars
@@ -24,8 +24,8 @@ RUN set -x
 
 # Install requeriments
 RUN apk update -qq
+RUN apk add --no-cache     wget curl openssh bash procps openssl perl ttf-dejavu tini xmlstarlet
 RUN update-ca-certificates
-RUN apk add --no-cache     wget curl openssh bash procps openssl perl ttf-dejavu tini libc6-compat xmlstarlet
 
 # Jira set up
 RUN mkdir -p               "${JIRA_HOME}"
@@ -41,7 +41,6 @@ RUN curl -Ls               "${MYSQL_CONNECTOR_DOWNLOAD_URL}"   \
                            --strip-components=1 --no-same-owner
 RUN rm -f                  "${JIRA_INSTALL}/lib/${OLD_POSTGRES_CONNECTOR_JAR}"
 RUN curl -Ls               "${POSTGRES_CONNECTOR_DOWNLOAD_URL}" -o "${JIRA_INSTALL}/lib/${POSTGRES_CONNECTOR_JAR}"
-RUN sed --in-place         "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh"
 RUN echo -e                "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 RUN touch -d               "@0" "${JIRA_INSTALL}/conf/server.xml"
 
